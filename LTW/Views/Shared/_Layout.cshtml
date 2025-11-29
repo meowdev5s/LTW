@@ -1,39 +1,140 @@
-﻿<!DOCTYPE html>
-<html>
+﻿@{
+    var title = ViewBag.Title ?? "Linh kiện điện tử 4M";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@title - 4M</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-        <div class="container">
-            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                </ul>
+
+    <!-- TOPBAR -->
+    <div class="topbar bg-dark text-light">
+        <div class="container d-flex justify-content-between align-items-center py-1">
+            <div class="small">
+                📍 Linh kiện điện tử 4M - Chuyên sỉ & lẻ linh kiện, module, phụ kiện điện tử
+            </div>
+            <div class="d-flex gap-3 small">
+                <span>📞 Hotline: <strong>0988 888 888</strong></span>
+                <a href="#" class="topbar-link text-light">Yêu thích</a>
+                <a href="#" class="topbar-link text-light">Đăng nhập</a>
+                <a href="#" class="topbar-link text-light">Đăng ký</a>
             </div>
         </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
     </div>
+
+    <!-- HEADER -->
+    <header class="bg-white shadow-sm">
+        <div class="container py-2">
+            <div class="row align-items-center g-2">
+                <!-- Logo -->
+                <div class="col-md-3 d-flex align-items-center mb-2 mb-md-0">
+                    <a href="@Url.Action("Index", "Home")" class="d-flex align-items-center text-decoration-none">
+                        <div class="logo-mark-4m me-2">
+                            <span>4M</span>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <span class="fw-bold text-uppercase text-4m-primary">Linh kiện điện tử 4M</span>
+                            <small class="text-muted">Linh kiện - Module - Phụ kiện</small>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Search -->
+                <div class="col-md-6 mb-2 mb-md-0">
+                    <form class="d-flex" method="get" action="@Url.Action("Index","Home")">
+                        <div class="input-group">
+                            <input type="text"
+                                   name="keyword"
+                                   class="form-control"
+                                   placeholder="Tìm IC, module, cảm biến, nguồn, phụ kiện..." />
+                            <select name="category" class="form-select d-none d-sm-block" style="max-width: 180px;">
+                                <option value="">Tất cả danh mục</option>
+                                <option>Linh kiện rời</option>
+                                <option>Module nguồn</option>
+                                <option>Module cảm biến</option>
+                                <option>Kit phát triển</option>
+                                <option>Phụ kiện - Dụng cụ</option>
+                            </select>
+                            <button type="submit" class="btn btn-4m-primary">
+                                🔍 <span class="d-none d-sm-inline">Tìm kiếm</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Actions -->
+                <div class="col-md-3 text-md-end">
+                    <a href="#" class="btn btn-outline-4m-primary btn-sm">
+                        + Đăng tin <strong>miễn phí</strong>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN NAV -->
+    <nav class="bg-white border-top border-bottom">
+        <div class="container py-2">
+            <ul class="nav nav-pills flex-wrap gap-1">
+                <li class="nav-item">
+                    <a class="nav-link active" href="@Url.Action("Index","Home")">Trang chủ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Linh kiện rời</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Module nguồn</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Cảm biến - Module</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Kit phát triển</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Dụng cụ - Phụ kiện</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Thanh lý - Đồ cũ</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- MAIN LAYOUT -->
+    <main class="py-3">
+        <div class="container">
+            <div class="row g-3">
+                <!-- SIDEBAR -->
+                @*<div class="col-lg-3">
+                    @Html.Partial("_Sidebar4M")
+                </div>*@
+
+                <!-- CONTENT -->
+                <div class="col-lg-9">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark text-light py-3 mt-3">
+        <div class="container text-center small">
+            © @DateTime.Now.Year Linh kiện điện tử 4M.
+            <br />Email: <a href="mailto:contact@4m.vn" class="text-light">contact@4m.vn</a>
+        </div>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
