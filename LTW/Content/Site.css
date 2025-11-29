@@ -28,29 +28,6 @@ body {
     box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
 }
 
-/* ========== TOPBAR ========== */
-
-.topbar {
-    font-size: 0.85rem;
-    background: linear-gradient(90deg, #0b1120, #020617);
-    border-bottom: 1px solid rgba(148, 163, 184, 0.35);
-}
-
-.topbar .container {
-    gap: 0.75rem;
-}
-
-.topbar-link {
-    opacity: 0.9;
-    transition: opacity 0.15s ease, transform 0.1s ease;
-}
-
-.topbar-link:hover {
-    opacity: 1;
-    transform: translateY(-1px);
-    text-decoration: underline;
-}
-
 /* ========== HEADER (LOGO + SEARCH) ========== */
 
 header {
@@ -143,32 +120,35 @@ header .form-select {
     color: var(--4m-primary-dark);
 }
 
-/* ========== NAV ========== */
-
-nav {
-    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.04);
+/* NAVBAR 4M GỌN */
+.navbar-4m {
+    display: flex;
+    flex-wrap: nowrap;
 }
 
-.nav-pills .nav-link {
-    border-radius: 999px;
-    padding: 0.35rem 0.95rem;
-    font-size: 0.88rem;
-    color: #4b5563;
-    transition: background-color 0.12s ease, color 0.12s ease, transform 0.08s ease;
+/* Viên pill */
+.nav-pill-4m {
+    border-radius: 999px !important;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.77rem;
+    color: #374151;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    transition: background 0.1s ease, color 0.1s ease, transform 0.08s ease;
 }
 
-.nav-pills .nav-link:hover {
-    background-color: rgba(148, 163, 184, 0.14);
-    color: #111827;
+.nav-pill-4m:hover {
+    background: #e2e8f0;
+    color: #1f2937;
     transform: translateY(-1px);
 }
 
-.nav-pills .nav-link.active {
-    background: linear-gradient(135deg, rgba(31, 138, 112, 0.22), rgba(34, 197, 94, 0.19));
+.nav-pill-4m.active {
+    background: var(--4m-primary-light);
     color: var(--4m-primary-dark);
+    border-color: var(--4m-primary);
     font-weight: 600;
 }
-
 /* ========== MAIN LAYOUT ========== */
 
 main {
@@ -182,26 +162,45 @@ main .container {
 
 /* Sidebar danh mục */
 
-.sidebar-category-list .list-group-item {
+.sidebar-parent-item {
     font-size: 0.9rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-left: 3px solid transparent;
-    transition: background-color 0.1s ease, border-color 0.1s ease, transform 0.06s ease;
 }
 
-.sidebar-category-list .list-group-item:hover {
-    background-color: #f3f4f6;
-    border-left-color: var(--4m-primary);
-    transform: translateX(1px);
+/* nút toggle */
+.sidebar-toggle {
+    color: var(--4m-text-muted);
 }
 
-.sidebar-category-list .badge {
-    background-color: rgba(15, 23, 42, 0.04);
+.sidebar-toggle:hover {
+    color: var(--4m-primary);
+    text-decoration: none;
 }
 
+/* caret xoay khi mở */
+.sidebar-toggle.is-open .sidebar-toggle-caret {
+    transform: rotate(90deg);
+}
+
+.sidebar-toggle-caret {
+    display: inline-block;
+    transition: transform 0.15s ease;
+}
+
+/* danh sách con */
+.sidebar-children {
+    margin-top: 0.35rem;
+}
+
+.sidebar-child {
+    padding-left: 1.5rem;
+    font-size: 0.85rem;
+    background-color: #f9fafb;
+    border-left: 2px solid #e5e7eb;
+}
+
+.sidebar-child-name {
+    margin-left: 0.25rem;
+}
 /* card lọc nhanh */
 
 .card .form-label {
@@ -389,4 +388,53 @@ footer a {
         flex-direction: column;
         align-items: flex-start !important;
     }
+}
+
+/* ==== CART ICON 4M ==== */
+
+.cart-button-4m {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+    border: 1px solid #d1fae5;
+    box-shadow: 0 4px 14px rgba(31, 138, 112, 0.15);
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    position: relative;
+}
+
+.cart-button-4m:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(31, 138, 112, 0.25);
+}
+
+.cart-icon-4m {
+    font-size: 1.4rem;
+    color: var(--4m-primary);
+    transition: color 0.2s ease, transform 0.15s ease;
+}
+
+.cart-button-4m:hover .cart-icon-4m {
+    color: var(--4m-primary-dark);
+    transform: scale(1.15);
+}
+
+/* Badge số lượng */
+.cart-badge-4m {
+    top: -4px;
+    right: -6px;
+    background: #ef4444;
+    color: #ffffff;
+    font-size: 0.7rem;
+    padding: 0.1rem 0.38rem;
+    border-radius: 999px;
+    font-weight: 700;
+    box-shadow: 0 3px 8px rgba(239, 68, 68, 0.45);
+    transition: transform 0.12s ease, background-color 0.12s ease;
+}
+
+.cart-button-4m:hover .cart-badge-4m {
+    transform: scale(1.05);
+    background-color: #dc2626;
 }

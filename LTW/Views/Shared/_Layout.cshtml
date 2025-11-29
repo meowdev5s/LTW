@@ -13,22 +13,6 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-
-    <!-- TOPBAR -->
-    <div class="topbar bg-dark text-light">
-        <div class="container d-flex justify-content-between align-items-center py-1">
-            <div class="small">
-                📍 Linh kiện điện tử 4M - Chuyên sỉ & lẻ linh kiện, module, phụ kiện điện tử
-            </div>
-            <div class="d-flex gap-3 small">
-                <span>📞 Hotline: <strong>0988 888 888</strong></span>
-                <a href="#" class="topbar-link text-light">Yêu thích</a>
-                <a href="#" class="topbar-link text-light">Đăng nhập</a>
-                <a href="#" class="topbar-link text-light">Đăng ký</a>
-            </div>
-        </div>
-    </div>
-
     <!-- HEADER -->
     <header class="bg-white shadow-sm">
         <div class="container py-2">
@@ -47,33 +31,48 @@
                 </div>
 
                 <!-- Search -->
-                <div class="col-md-6 mb-2 mb-md-0">
+                <div class="col-md-5 mb-2 mb-md-0">
                     <form class="d-flex" method="get" action="@Url.Action("Index","Home")">
                         <div class="input-group">
                             <input type="text"
                                    name="keyword"
                                    class="form-control"
-                                   placeholder="Tìm IC, module, cảm biến, nguồn, phụ kiện..." />
-                            <select name="category" class="form-select d-none d-sm-block" style="max-width: 180px;">
-                                <option value="">Tất cả danh mục</option>
-                                <option>Linh kiện rời</option>
-                                <option>Module nguồn</option>
-                                <option>Module cảm biến</option>
-                                <option>Kit phát triển</option>
-                                <option>Phụ kiện - Dụng cụ</option>
-                            </select>
-                            <button type="submit" class="btn btn-4m-primary">
-                                🔍 <span class="d-none d-sm-inline">Tìm kiếm</span>
+                                   placeholder="Tìm sản phẩm, module, linh kiện..." />
+
+                            <button type="submit" class="btn btn-4m-primary px-3">
+                                🔍 Tìm kiếm
                             </button>
                         </div>
                     </form>
                 </div>
 
-                <!-- Actions -->
-                <div class="col-md-3 text-md-end">
-                    <a href="#" class="btn btn-outline-4m-primary btn-sm">
-                        + Đăng tin <strong>miễn phí</strong>
+                <!-- Cart + Đăng nhập -->
+                <div class="col-md-4 d-flex justify-content-md-end justify-content-start align-items-center gap-3">
+
+                    @* GIỎ HÀNG 4M *@
+                    <a href="@Url.Action("Index","Cart")"
+                       class="cart-button-4m position-relative d-flex align-items-center justify-content-center me-1">
+                        <i class="bi bi-bag-heart-fill cart-icon-4m"></i>
+                        @*<span class="cart-badge-4m position-absolute">
+                            @((Session["Cart"] != null) ? ((List<CartItem>)Session["Cart"]).Count : 0)
+                        </span>*@
                     </a>
+
+                    @* KHU VỰC ĐĂNG NHẬP/ĐĂNG KÝ *@
+                    <div class="d-flex flex-column text-end small">
+                        <div>
+                            <a href="@Url.Action("Login","Account")" class="text-decoration-none me-2">
+                                Đăng nhập
+                            </a>
+                            <span class="text-muted">/</span>
+                            <a href="@Url.Action("Register","Account")" class="text-decoration-none ms-2">
+                                Đăng ký
+                            </a>
+                        </div>
+                        <span class="text-muted d-none d-md-inline">
+                            Xin chào, khách truy cập!
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -82,29 +81,7 @@
     <!-- MAIN NAV -->
     <nav class="bg-white border-top border-bottom">
         <div class="container py-2">
-            <ul class="nav nav-pills flex-wrap gap-1">
-                <li class="nav-item">
-                    <a class="nav-link active" href="@Url.Action("Index","Home")">Trang chủ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Linh kiện rời</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Module nguồn</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Cảm biến - Module</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Kit phát triển</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Dụng cụ - Phụ kiện</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Thanh lý - Đồ cũ</a>
-                </li>
-            </ul>
+            @Html.Partial("_NavbarCategories")
         </div>
     </nav>
 
@@ -113,9 +90,9 @@
         <div class="container">
             <div class="row g-3">
                 <!-- SIDEBAR -->
-                @*<div class="col-lg-3">
+                <div class="col-lg-3">
                     @Html.Partial("_Sidebar4M")
-                </div>*@
+                </div>
 
                 <!-- CONTENT -->
                 <div class="col-lg-9">
