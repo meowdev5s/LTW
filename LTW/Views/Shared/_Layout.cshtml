@@ -1,4 +1,5 @@
-﻿@{
+﻿@using LTW.Models
+@{
     var title = ViewBag.Title ?? "Linh kiện điện tử 4M";
 }
 
@@ -8,6 +9,9 @@
     <meta charset="utf-8" />
     <title>@title - 4M</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -53,9 +57,9 @@
                     <a href="@Url.Action("Index","Cart")"
                        class="cart-button-4m position-relative d-flex align-items-center justify-content-center me-1">
                         <i class="bi bi-bag-heart-fill cart-icon-4m"></i>
-                        @*<span class="cart-badge-4m position-absolute">
-                            @((Session["Cart"] != null) ? ((List<CartItem>)Session["Cart"]).Count : 0)
-                        </span>*@
+                        <span class="cart-badge-4m position-absolute">
+                            @((Session["Cart"] != null) ? ((List<CartItems>)Session["Cart"]).Count : 0)
+                        </span>
                     </a>
 
                     @* KHU VỰC ĐĂNG NHẬP/ĐĂNG KÝ *@

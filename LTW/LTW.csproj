@@ -244,6 +244,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_NavbarCategories.cshtml" />
     <Content Include="Views\Shared\_Sidebar4M.cshtml" />
+    <Content Include="Views\Shared\_CartBadge.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
