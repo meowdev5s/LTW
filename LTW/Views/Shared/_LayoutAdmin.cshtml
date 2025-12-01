@@ -1,0 +1,239 @@
+﻿@{
+    var title = ViewBag.Title ?? "4M Admin";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <title>@title - 4M Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="~/Content/SiteAdmin.css" rel="stylesheet" />
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="admin-wrapper">
+
+        <!-- TOPBAR -->
+        <div class="admin-topbar">
+            <div class="container-fluid py-2">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="admin-topbar-brand">
+                            4M Admin
+                        </div>
+                        <div class="admin-topbar-sub">
+                            Bảng điều khiển quản trị hệ thống linh kiện điện tử 4M
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center">
+                        <a href="@Url.Action("Index", "Home", new { area = "" })"
+                           class="admin-topbar-link">
+                            ⬅ Quay về trang bán hàng
+                        </a>
+
+                        <span class="admin-topbar-link">
+                            Xin chào, @Session["AdminName"] ?? "Admin"
+                        </span>
+
+                        <a href="@Url.Action("Logout", "AdminAccount")"
+                           class="admin-topbar-link">
+                            Đăng xuất
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN -->
+        <div class="admin-main">
+            <!-- SIDEBAR -->
+            <aside class="admin-sidebar">
+                <div class="admin-sidebar-inner">
+
+                    <div class="admin-sidebar-section-title">
+                        Điều hướng
+                    </div>
+
+                    <ul class="admin-nav">
+                        <li class="admin-nav-item">
+                            <a href="@Url.Action("Index", "AdminHome")"
+                               class="admin-nav-link">
+                                <span class="admin-nav-label">
+                                    <span class="admin-nav-icon">🏠</span>
+                                    <span>Dashboard</span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="admin-sidebar-section-title">
+                        Quản lý dữ liệu
+                    </div>
+
+                    <!-- DANH MỤC -->
+                    <ul class="admin-nav">
+                        <li class="admin-nav-item">
+                            <div class="admin-nav-link js-admin-toggle">
+                                <span class="admin-nav-label">
+                                    <span class="admin-nav-icon">📂</span>
+                                    <span>Danh mục</span>
+                                </span>
+                                <span class="admin-nav-caret">▾</span>
+                            </div>
+                            <ul class="admin-submenu">
+                                <li>
+                                    <a href="@Url.Action("Index", "AdminCategories")"
+                                       class="admin-submenu-link">
+                                        Danh sách danh mục
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Create", "AdminCategories")"
+                                       class="admin-submenu-link">
+                                        Thêm danh mục
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- SẢN PHẨM -->
+                        <li class="admin-nav-item">
+                            <div class="admin-nav-link js-admin-toggle">
+                                <span class="admin-nav-label">
+                                    <span class="admin-nav-icon">📦</span>
+                                    <span>Sản phẩm</span>
+                                </span>
+                                <span class="admin-nav-caret">▾</span>
+                            </div>
+                            <ul class="admin-submenu">
+                                <li>
+                                    <a href="@Url.Action("Index", "AdminProducts")"
+                                       class="admin-submenu-link">
+                                        Danh sách sản phẩm
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Create", "AdminProducts")"
+                                       class="admin-submenu-link">
+                                        Thêm sản phẩm
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <!-- NGƯỜI DÙNG -->
+                        <li class="admin-nav-item">
+                            <div class="admin-nav-link js-admin-toggle">
+                                <span class="admin-nav-label">
+                                    <span class="admin-nav-icon">👤</span>
+                                    <span>Người dùng</span>
+                                </span>
+                                <span class="admin-nav-caret">▾</span>
+                            </div>
+                            <ul class="admin-submenu">
+                                <li>
+                                    <a href="@Url.Action("Index", "AdminUsers")"
+                                       class="admin-submenu-link">
+                                        Danh sách người dùng
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Admins", "AdminUsers")"
+                                       class="admin-submenu-link">
+                                        Tài khoản quản trị
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <!-- ĐƠN HÀNG -->
+                        <li class="admin-nav-item">
+                            <div class="admin-nav-link js-admin-toggle">
+                                <span class="admin-nav-label">
+                                    <span class="admin-nav-icon">🧾</span>
+                                    <span>Đơn hàng</span>
+                                </span>
+                                <span class="admin-nav-caret">▾</span>
+                            </div>
+                            <ul class="admin-submenu">
+                                <li>
+                                    <a href="@Url.Action("Index", "AdminOrders")"
+                                       class="admin-submenu-link">
+                                        Tất cả đơn hàng
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Pending", "AdminOrders")"
+                                       class="admin-submenu-link">
+                                        Đơn đang chờ xử lý
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Completed", "AdminOrders")"
+                                       class="admin-submenu-link">
+                                        Đơn đã hoàn thành
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Cancelled", "AdminOrders")"
+                                       class="admin-submenu-link">
+                                        Đơn đã hủy
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="admin-sidebar-footer">
+                        4M Admin Panel · @DateTime.Now.Year
+                    </div>
+                </div>
+            </aside>
+
+            <!-- CONTENT -->
+            <div class="admin-content-wrapper">
+                <div class="admin-page-header">
+                    <div class="admin-page-title">
+                        @ViewBag.PageTitle
+                    </div>
+                    <div class="admin-breadcrumb">
+                        @RenderSection("Breadcrumb", required: false)
+                    </div>
+                </div>
+
+                @RenderBody()
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="admin-footer">
+            <div class="container-fluid text-center">
+                © @DateTime.Now.Year 4M - Hệ thống quản trị linh kiện điện tử
+            </div>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script>
+    $(function () {
+        $('.js-admin-toggle').on('click', function (e) {
+            e.preventDefault();
+            var $item = $(this).closest('.admin-nav-item');
+            $item.toggleClass('open');
+        });
+    });
+    </script>
+
+    @RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
