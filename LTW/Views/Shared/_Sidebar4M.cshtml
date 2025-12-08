@@ -1,0 +1,108 @@
+﻿@using LTW.Models
+@{
+    var db = new LinhKienDienTuEntities_();
+
+    var allCategories = db.Categories
+                          .OrderBy(c => c.ParentID)
+                          .ThenBy(c => c.CategoryName)
+                          .ToList();
+
+    var parents = allCategories.Where(c => c.ParentID == null).ToList();
+
+    int selectedId;
+    int.TryParse(Request["categoryId"], out selectedId);
+
+    int? expandedParentId = null;
+    if (selectedId > 0)
+    {
+        var selectedCat = allCategories.FirstOrDefault(c => c.CategoryID == selectedId);
+        if (selectedCat != null)
+        {
+            expandedParentId = selectedCat.ParentID ?? selectedCat.CategoryID;
+        }
+    }
+}
+
+<div class="card shadow-sm border-0 mb-3">
+    <div class="card-header bg-4m-primary text-white py-2">
+        <strong>Danh mục sản phẩm</strong>
+    </div>
+
+    <ul class="list-group list-group-flush sidebar-category-list">
+        @foreach (var parent in parents)
+        {
+            var children = allCategories.Where(c => c.ParentID == parent.CategoryID).ToList();
+            bool hasChildren = children.Any();
+            bool isParentActive = (parent.CategoryID == selectedId);
+            bool isExpanded = (expandedParentId == parent.CategoryID);
+            string targetId = "cat-" + parent.CategoryID;
+
+            <li class="list-group-item sidebar-parent-item">
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <a href="@Url.Action("Index","Home", new { categoryId = parent.CategoryID })"
+                       class="text-decoration-none w-100 me-2">
+                        <span class="fw-semibold @(isParentActive ? "text-4m-primary" : "text-dark")">
+                            @parent.CategoryName
+                        </span>
+                        <span class="badge bg-light text-dark ms-1">
+                            @parent.Products.Count()
+                        </span>
+                    </a>
+
+                    @* nút thu gọn/mở rộng con *@
+                    @if (hasChildren)
+                    {
+                        <button type="button"
+                                class="btn btn-link btn-sm p-0 sidebar-toggle js-toggle-children @(isExpanded ? "is-open" : "")"
+                                data-target="#@targetId">
+                            <span class="sidebar-toggle-caret">&#9656;</span>
+                        </button>
+                    }
+                </div>
+
+                @* danh mục con *@
+                @if (hasChildren)
+                {
+                    <div id="@targetId"
+                         class="sidebar-children"
+                         style="display:@(isExpanded ? "block" : "none")">
+                        <ul class="list-group list-group-flush">
+                            @foreach (var child in children)
+                            {
+                                bool isChildActive = (child.CategoryID == selectedId);
+
+                                <li class="list-group-item sidebar-child d-flex justify-content-between align-items-center">
+                                    <a href="@Url.Action("Index","Home", new { categoryId = child.CategoryID })"
+                                       class="text-decoration-none w-100 d-flex justify-content-between align-items-center">
+                                        <span class="sidebar-child-name @(isChildActive ? "text-4m-primary" : "text-muted")">
+                                            └ @child.CategoryName
+                                        </span>
+                                        <span class="badge bg-light text-dark">
+                                            @child.Products.Count()
+                                        </span>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+            </li>
+        }
+    </ul>
+</div>
+
+<script>
+    $(function () {
+        $('.js-toggle-children').on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            var btn = $(this);
+            var target = btn.data('target');
+
+            $(target).slideToggle(150);
+            btn.toggleClass('is-open');
+        });
+    });
+</script>

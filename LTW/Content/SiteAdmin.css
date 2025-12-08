@@ -1,0 +1,253 @@
+﻿/* ==============================================
+   4M ADMIN PANEL – SiteAdmin.css
+   ============================================== */
+
+:root {
+    --4m-primary: #1f8a70;
+    --4m-primary-dark: #166554;
+    --4m-accent: #fbbf24;
+    --4m-bg-admin: #1e293b;
+}
+
+/* BODY */
+body {
+    background-color: #e5e7eb;
+}
+
+/* WRAPPER */
+.admin-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-main {
+    flex: 1 1 auto;
+    display: flex;
+    min-height: 0;
+}
+
+/* ==============================================
+   TOPBAR
+   ============================================== */
+
+.admin-topbar {
+    background: linear-gradient(90deg, var(--4m-bg-admin), #020617);
+    color: #e5e7eb;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.6);
+}
+
+.admin-topbar-brand {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+.admin-topbar-sub {
+    font-size: 0.8rem;
+    color: #9ca3af;
+}
+
+.admin-topbar-link {
+    font-size: 0.85rem;
+    color: #e5e7eb;
+    text-decoration: none;
+    margin-left: 1rem;
+    opacity: 0.9;
+}
+
+.admin-topbar-link:hover {
+    background: linear-gradient(90deg, var(--4m-bg-admin), #0f172a);
+    color: #e5e7eb;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.5);
+}
+
+/* ==============================================
+   SIDEBAR
+   ============================================== */
+
+.admin-sidebar {
+    width: 240px;
+    background: #111827;
+    color: #e5e7eb;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-sidebar-inner {
+    padding: 0.75rem 0.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 100%;
+}
+
+.admin-sidebar-section-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #9ca3af;
+    padding: 0.35rem 0.75rem;
+}
+
+.admin-nav {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.admin-nav-item {
+    margin-bottom: 0.1rem;
+}
+
+.admin-nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.45rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.86rem;
+    color: #e5e7eb;
+    text-decoration: none;
+    transition: background 0.12s ease, color 0.12s ease, transform 0.08s ease;
+}
+
+.admin-nav-link:hover {
+    background: rgba(148, 163, 184, 0.25);
+    color: #f9fafb;
+    transform: translateY(-1px);
+}
+
+.admin-nav-link.active {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.9), rgba(45, 212, 191, 0.8));
+    color: #022c22;
+}
+
+.admin-nav-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.admin-nav-icon {
+    width: 18px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.admin-nav-caret {
+    font-size: 0.7rem;
+    opacity: 0.8;
+    transition: transform 0.15s ease;
+}
+
+.admin-nav-item.open > .admin-submenu {
+    display: block;
+}
+
+.admin-nav-item.open .admin-nav-caret {
+    transform: rotate(180deg);
+}
+
+/* Submenu */
+.admin-submenu {
+    list-style: none;
+    padding-left: 1.9rem;
+    margin-bottom: 0.3rem;
+    display: none;
+}
+
+.admin-submenu-link {
+    display: block;
+    padding: 0.25rem 0.75rem 0.25rem 0.2rem;
+    font-size: 0.8rem;
+    color: #cbd5f5;
+    text-decoration: none;
+    border-radius: 0.35rem;
+    transition: background 0.1s ease, color 0.1s ease;
+}
+
+.admin-submenu-link:hover {
+    background: rgba(148, 163, 184, 0.2);
+    color: #ffffff;
+}
+
+.admin-submenu-link.active {
+    color: #ecfeff;
+    font-weight: 500;
+    background: rgba(34, 197, 94, 0.45);
+}
+
+.admin-sidebar-footer {
+    margin-top: auto;
+    padding: 0.75rem;
+    font-size: 0.75rem;
+    color: #9ca3af;
+    border-top: 1px solid #1f2937;
+}
+
+/* ==============================================
+   CONTENT
+   ============================================== */
+
+.admin-content-wrapper {
+    flex: 1 1 auto;
+    background: #f3f4f6;
+    padding: 1rem 1.25rem 1.5rem;
+    overflow: auto;
+}
+
+.admin-page-header {
+    margin-bottom: 1rem;
+}
+
+.admin-page-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.15rem;
+}
+
+.admin-breadcrumb {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+.admin-breadcrumb a {
+    color: #6b7280;
+    text-decoration: none;
+}
+
+.admin-breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* ==============================================
+   FOOTER
+   ============================================== */
+
+.admin-footer {
+    background: #0b1120;
+    color: #6b7280;
+    font-size: 0.8rem;
+    padding: 0.4rem 0;
+}
+
+/* ==============================================
+   RESPONSIVE
+   ============================================== */
+
+@media (max-width: 992px) {
+    .admin-main {
+        flex-direction: column;
+    }
+
+    .admin-sidebar {
+        width: 100%;
+        flex: 0 0 auto;
+    }
+
+    .admin-content-wrapper {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}

@@ -1,0 +1,31 @@
+﻿@using LTW.Models
+@{
+    var db = new LinhKienDienTuEntities_();
+
+    var categories = db.Categories
+                       .Where(c => c.ParentID == null)
+                       .OrderBy(c => c.CategoryName)
+                       .ToList();
+
+    int selectedId;
+    int.TryParse(Request["categoryId"], out selectedId);
+}
+
+<div class="navbar-4m d-flex align-items-center">
+
+    <!-- Trang chủ -->
+    <a class="nav-link nav-pill-4m me-2 @(selectedId == 0 ? "active" : "")"
+       href="@Url.Action("Index","Home")">
+        Trang chủ
+    </a>
+
+    <!-- Danh mục cha -->
+    @foreach (var item in categories)
+    {
+        var active = (item.CategoryID == selectedId) ? "active" : "";
+        <a class="nav-link nav-pill-4m me-2 @active"
+           href="@Url.Action("Index","Home", new { categoryId = item.CategoryID })">
+            @item.CategoryName
+        </a>
+    }
+</div>

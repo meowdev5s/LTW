@@ -1,0 +1,107 @@
+﻿@using LinhKienDienTu
+@{
+    ViewBag.Title = "Đăng nhập & Đăng ký";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Dùng layout chính
+}
+
+<main class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+
+                    <ul class="nav nav-tabs nav-fill mb-4" id="authTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active fw-bold" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab">ĐĂNG NHẬP</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link fw-bold" id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button" role="tab">ĐĂNG KÝ</button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="authTabContent">
+
+                        <div class="tab-pane fade show active" id="login" role="tabpanel">
+                            @using (Html.BeginForm("LoginSubmit", "Account", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                // Hiển thị lỗi đăng nhập nếu có
+                                if (ViewBag.ErrorLogin != null)
+                                {
+                                    <div class="alert alert-danger">@ViewBag.ErrorLogin</div>
+                                }
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="Username" id="loginUsername" placeholder="Tên đăng nhập" required>
+                                    <label for="loginUsername">Tên đăng nhập</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="password" class="form-control" name="PasswordHash" id="loginPassword" placeholder="Mật khẩu" required>
+                                    <label for="loginPassword">Mật khẩu</label>
+                                </div>
+
+                                <div class="d-flex justify-content-between mb-3 small">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="rememberMe">
+                                        <label class="form-check-label" for="rememberMe">Ghi nhớ đăng nhập</label>
+                                    </div>
+                                    <a href="#" class="text-decoration-none text-danger">Quên mật khẩu?</a>
+                                </div>
+
+                                <button type="submit" class="btn btn-danger w-100 py-2 fw-bold mb-3">ĐĂNG NHẬP</button>
+                            }
+
+                            <div class="text-center mb-3 text-muted small">Hoặc đăng nhập bằng</div>
+                            <div class="d-flex gap-2 justify-content-center">
+                                <a href="#" class="btn btn-outline-secondary btn-sm">Google</a>
+                                <a href="#" class="btn btn-outline-primary btn-sm">Facebook</a>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="register" role="tabpanel">
+                            @using (Html.BeginForm("RegisterSubmit", "Account", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                // Hiển thị lỗi đăng ký nếu có
+                                if (ViewBag.ErrorRegister != null)
+                                {
+                                    <div class="alert alert-danger">@ViewBag.ErrorRegister</div>
+                                }
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="FullName" id="regFullname" placeholder="Họ và tên" required>
+                                    <label for="regFullname">Họ và tên</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="Username" id="regUsername" placeholder="Tên đăng nhập" required>
+                                    <label for="regUsername">Tên đăng nhập</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" name="Email" id="regEmail" placeholder="Email" required>
+                                    <label for="regEmail">Email</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="Phone" id="regPhone" placeholder="Số điện thoại">
+                                    <label for="regPhone">Số điện thoại</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="password" class="form-control" name="PasswordHash" id="regPassword" placeholder="Mật khẩu" required>
+                                    <label for="regPassword">Mật khẩu</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="password" class="form-control" name="regConfirmPass" id="regConfirmPass" placeholder="Nhập lại mật khẩu" required>
+                                    <label for="regConfirmPass">Nhập lại mật khẩu</label>
+                                </div>
+
+                                <button type="submit" class="btn btn-danger w-100 py-2 fw-bold">ĐĂNG KÝ TÀI KHOẢN</button>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

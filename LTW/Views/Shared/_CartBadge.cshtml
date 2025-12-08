@@ -1,0 +1,37 @@
+﻿@using LTW.Models
+@{
+    var db = new LinhKienDienTuEntities_();
+
+    int cartCount = 0;
+
+    // Nếu anh có login: lưu UserID trong Session khi đăng nhập
+    int userId;
+    if (Session["UserID"] != null && int.TryParse(Session["UserID"].ToString(), out userId))
+    {
+        var cart = db.Cart.FirstOrDefault(c => c.UserID == userId);
+        if (cart != null)
+        {
+            cartCount = cart.CartItems.Sum(ci => ci.Quantity);
+        }
+    }
+    else
+    {
+        if (Session["CartItems"] != null)
+        {
+            var temp = Session["CartItems"] as List<CartItems>;
+            if (temp != null)
+            {
+                cartCount = temp.Sum(x => x.Quantity);
+            }
+        }
+    }
+}
+
+<a href="@Url.Action("Index","Cart")"
+   class="cart-button-4m position-relative d-flex align-items-center justify-content-center me-1">
+    <i class="bi bi-bag-heart-fill cart-icon-4m"></i>
+
+    <span class="cart-badge-4m position-absolute">
+        @cartCount
+    </span>
+</a>

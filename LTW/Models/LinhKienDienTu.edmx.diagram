@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fff85cefd1e941e69fac9d80ee32c952" Name="Diagram1">
+        <EntityTypeShape EntityType="LinhKienDienTuModel.Cart" Width="1.5" PointX="0.75" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LinhKienDienTuModel.CartItems" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LinhKienDienTuModel.Categories" Width="1.5" PointX="1.5" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LinhKienDienTuModel.OrderItems" Width="1.5" PointX="6" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LinhKienDienTuModel.Orders" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LinhKienDienTuModel.ProductFiles" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LinhKienDienTuModel.Products" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LinhKienDienTuModel.Users" Width="1.5" PointX="1.5" PointY="14.75" IsExpanded="true" />
+        <AssociationConnector Association="LinhKienDienTuModel.FK__Cart__UserID__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="LinhKienDienTuModel.FK__CartItems__CartI__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="LinhKienDienTuModel.FK__CartItems__Produ__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="LinhKienDienTuModel.FK__Categorie__Paren__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="LinhKienDienTuModel.FK__Products__Catego__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="LinhKienDienTuModel.FK__OrderItem__Order__619B8048" ManuallyRouted="false" />
+        <AssociationConnector Association="LinhKienDienTuModel.FK__OrderItem__Produ__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="LinhKienDienTuModel.FK__Orders__UserID__5EBF139D" ManuallyRouted="false" />
+        <AssociationConnector Association="LinhKienDienTuModel.FK__ProductFi__Produ__656C112C" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
