@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LTW.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,23 +9,13 @@ namespace LTW.Controllers
 {
     public class HomeController : Controller
     {
+        LinhKienDienTuEntities_ db = new LinhKienDienTuEntities_();
         public ActionResult Index()
         {
-            return View();
+            return View(db.Products.ToList());
+
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }
