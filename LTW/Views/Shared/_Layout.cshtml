@@ -35,19 +35,23 @@
                 </div>
 
                 <!-- Search -->
+                
                 <div class="col-md-5 mb-2 mb-md-0">
-                    <form class="d-flex" method="get" action="@Url.Action("Index","Home")">
-                        <div class="input-group">
-                            <input type="text"
-                                   name="keyword"
-                                   class="form-control"
-                                   placeholder="Tìm sản phẩm, module, linh kiện..." />
+                    @using (Html.BeginForm("TimKiemTheoTuKhoa", "Home", FormMethod.Post))
+                    {
+                        <form class="d-flex" method="get" action="@Url.Action("Index","Home")">
+                            <div class="input-group">
+                                <input type="text"
+                                       name="keyword"
+                                       class="form-control"
+                                       placeholder="Tìm sản phẩm, module, linh kiện..." />
 
-                            <button type="submit" class="btn btn-4m-primary px-3">
-                                🔍 Tìm kiếm
-                            </button>
-                        </div>
-                    </form>
+                                <button type="submit" class="btn btn-4m-primary px-3">
+                                    🔍 Tìm kiếm
+                                </button>
+                            </div>
+                        </form>
+                    }
                 </div>
 
                 <!-- Cart + Đăng nhập -->
@@ -96,7 +100,7 @@
     <!-- MAIN NAV -->
     <nav class="bg-white border-top border-bottom">
         <div class="container py-2">
-            @Html.Partial("_NavbarCategories")
+            @Html.Partial("_NavbarCategories")            
         </div>
     </nav>
 

@@ -11,7 +11,7 @@
                 <div class="card-body text-center">
                     <h6 class="card-title">@item.ProductName</h6>
                     <p class="text-danger fw-bold">@item.Price.ToString("N0", new CultureInfo("en-US")) đ</p>
-                    @*<a href="@Url.Action("Detail", "Home", new { id = item.MaSP })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>*@
+                    <a href="@Url.Action("Detail", "Home", new { id = item.ProductID })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
                 </div>
             </div>
         </div>
