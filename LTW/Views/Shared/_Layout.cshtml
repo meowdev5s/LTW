@@ -64,18 +64,29 @@
 
                     @* KHU VỰC ĐĂNG NHẬP/ĐĂNG KÝ *@
                     <div class="d-flex flex-column text-end small">
-                        <div>
-                            <a href="@Url.Action("Login","Account")" class="text-decoration-none me-2">
-                                Đăng nhập
-                            </a>
-                            <span class="text-muted">/</span>
-                            <a href="@Url.Action("Register","Account")" class="text-decoration-none ms-2">
-                                Đăng ký
-                            </a>
-                        </div>
-                        <span class="text-muted d-none d-md-inline">
-                            Xin chào, khách truy cập!
-                        </span>
+                        @if (Session["User"] != null)
+                        {
+                            // Đã đăng nhập -> Lấy thông tin user từ Session
+                            var user = (Users)Session["User"];
+
+                            <span class="fw-bold">Xin chào, @user.FullName</span>
+                            <div>
+                                <a href="@Url.Action("Profile", "Account")" class="text-decoration-none me-2">Tài khoản</a>
+                                <span class="text-muted">/</span>
+                                <a href="@Url.Action("Logout", "Account")" class="text-decoration-none ms-2 text-danger">Đăng xuất</a>
+                            </div>
+                        }
+                        else
+                        {
+                            // Chưa đăng nhập
+                            <div>
+                                <a href="@Url.Action("Login","Account")" class="text-decoration-none me-2">Đăng nhập</a>
+                                <span class="text-muted">/</span>
+                                <a href="@Url.Action("Login","Account")" class="text-decoration-none ms-2">Đăng ký</a>
+                                @* Mình trỏ cả 2 link về Login vì trang Login của bạn đã có cả Tab Đăng ký *@
+                            </div>
+                            <span class="text-muted d-none d-md-inline">Xin chào, khách truy cập!</span>
+                        }
                     </div>
                 </div>
             </div>
