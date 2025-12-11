@@ -1,0 +1,151 @@
+﻿@model IEnumerable<LTW.Models.Products>
+@{
+    ViewBag.Title = "Quản lý sản phẩm";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Quản lý sản phẩm</h3>
+
+    <div>
+        <button id="btn-delete-selected" class="btn btn-danger me-2" disabled
+                onclick="deleteSelected()">
+            Xóa đã chọn
+        </button>
+
+        <a href="@Url.Action("Create")" class="btn btn-primary">+ Thêm sản phẩm</a>
+    </div>
+</div>
+
+<form method="get" class="row mb-3">
+
+    <div class="col-md-4">
+        <select name="categoryId" class="form-control" onchange="this.form.submit()">
+            <option value="">-- Lọc theo danh mục --</option>
+
+            @foreach (var parent in ViewBag.Categories)
+            {
+                <option value="@parent.CategoryID"
+                        @(ViewBag.SelectedCategory == parent.CategoryID ? "selected" : "")>
+                    @parent.CategoryName
+                </option>
+
+                @* Danh mục con *@
+                foreach (var child in parent.Categories1)
+                {
+                    <option value="@child.CategoryID"
+                            @(ViewBag.SelectedCategory == child.CategoryID ? "selected" : "")>
+                        └ @child.CategoryName
+                    </option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="col-md-8">
+        <input type="text" name="keyword" class="form-control"
+               placeholder="Tìm kiếm..." value="@Request["keyword"]" />
+    </div>
+
+</form>
+
+<form method="get" class="mb-3">
+    <input type="text" name="keyword" class="form-control"
+           placeholder="Tìm kiếm sản phẩm..." value="@Request["keyword"]" />
+</form>
+
+<table class="table table-bordered table-hover align-middle">
+    <thead class="table-secondary">
+        <tr>
+            <th width="40">
+                <input type="checkbox" id="check-all" />
+            </th>
+            <th>Hình</th>
+            <th>Sản phẩm</th>
+            <th>SKU</th>
+            <th>Giá</th>
+            <th>Tồn kho</th>
+            <th>Danh mục</th>
+            <th width="150">Hành động</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>
+                    <input type="checkbox" class="row-check" value="@p.ProductID" />
+                </td>
+
+                <td>
+                    <img src="~/Images/@p.ImageURL" style="width:50px;height:50px;object-fit:cover;border-radius:4px;" />
+                </td>
+
+                <td>@p.ProductName</td>
+                <td>@p.SKU</td>
+                <td>@String.Format("{0:N0}đ", p.Price)</td>
+                <td>@p.Stock</td>
+                <td>@p.Categories.CategoryName</td>
+
+                <td>
+                    <a href="@Url.Action("Edit", new { id = p.ProductID })"
+                       class="btn btn-sm btn-warning btn-edit-single">
+                        Sửa
+                    </a>
+
+                    <a href="@Url.Action("Delete", new { id = p.ProductID })"
+                       onclick="return confirm('Xóa sản phẩm này?')"
+                       class="btn btn-sm btn-danger">
+                        Xóa
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    // Check all
+    document.getElementById("check-all").addEventListener("change", function () {
+        document.querySelectorAll(".row-check").forEach(cb => cb.checked = this.checked);
+        updateSelectionUI();
+    });
+
+    // Khi tick từng checkbox
+    document.querySelectorAll(".row-check").forEach(cb => {
+        cb.addEventListener("change", updateSelectionUI);
+    });
+
+    function updateSelectionUI() {
+        let checkedCount = document.querySelectorAll(".row-check:checked").length;
+
+        // Nút xóa được bật nếu >=1 mục
+        document.getElementById("btn-delete-selected").disabled = (checkedCount === 0);
+
+        // Disable nút sửa nếu >=2 mục
+        document.querySelectorAll(".btn-edit-single").forEach(btn => {
+            btn.style.pointerEvents = (checkedCount >= 2) ? "none" : "auto";
+            btn.style.opacity = (checkedCount >= 2) ? "0.5" : "1";
+        });
+    }
+
+    // Xóa nhiều sản phẩm
+    function deleteSelected() {
+        if (!confirm("Bạn có chắc muốn xóa các sản phẩm đã chọn?")) return;
+
+        let ids = [];
+        document.querySelectorAll(".row-check:checked").forEach(cb => ids.push(cb.value));
+
+        // Gửi bằng POST để không giới hạn query string
+        $.ajax({
+            url: '@Url.Action("DeleteMultiple", "AdminProducts")',
+            type: 'POST',
+            data: { ids: ids },
+            traditional: true,
+            success: function () {
+                location.reload();
+            }
+        });
+    }
+</script>

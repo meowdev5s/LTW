@@ -232,22 +232,27 @@ body {
     padding: 0.4rem 0;
 }
 
+.dropdown-menu {
+    position: absolute !important;
+    z-index: 9999 !important;
+}
+
 /* ==============================================
    RESPONSIVE
    ============================================== */
 
 @media (max-width: 992px) {
-    .admin-main {
-        flex-direction: column;
-    }
+.admin-main {
+    flex-direction: column;
+}
 
-    .admin-sidebar {
-        width: 100%;
-        flex: 0 0 auto;
-    }
+.admin-sidebar {
+    width: 100%;
+    flex: 0 0 auto;
+}
 
-    .admin-content-wrapper {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
+.admin-content-wrapper {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
 }

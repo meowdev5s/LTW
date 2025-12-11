@@ -1,0 +1,31 @@
+﻿@model LTW.Models.Categories
+@{
+    ViewBag.Title = "Thêm danh mục";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Thêm danh mục</h3>
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Quay lại</a>
+</div>
+
+@using (Html.BeginForm())
+{
+    <div class="mb-3">
+        <label class="form-label">Tên danh mục</label>
+        @Html.TextBoxFor(m => m.CategoryName, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Danh mục cha</label>
+        <select name="ParentID" class="form-control">
+            <option value="">-- Không có --</option>
+            @foreach (var p in ViewBag.Parents)
+            {
+                <option value="@p.CategoryID">@p.CategoryName</option>
+            }
+        </select>
+    </div>
+
+    <button class="btn btn-primary">Thêm danh mục</button>
+}

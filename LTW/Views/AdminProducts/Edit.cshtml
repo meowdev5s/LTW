@@ -1,0 +1,68 @@
+﻿@model LTW.Models.Products
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<h3>Sửa sản phẩm</h3>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(m => m.ProductID)
+
+    <div class="mb-3">
+        <label>Tên sản phẩm</label>
+        @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        <label>SKU</label>
+        @Html.TextBoxFor(m => m.SKU, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        <label>Giá</label>
+        @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        <label>Tồn kho</label>
+        @Html.TextBoxFor(m => m.Stock, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        <label>Đơn vị</label>
+        @Html.TextBoxFor(m => m.Unit, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        <label>Danh mục</label>
+        <select name="CategoryID" class="form-control">
+            @foreach (var c in ViewBag.Categories)
+            {
+                <option value="@c.CategoryID" @(c.CategoryID == Model.CategoryID ? "selected" : "")>
+                    @c.CategoryName
+                </option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>Hình hiện tại</label><br />
+        <img src="~/Images/@Model.ImageURL" style="width:100px;border-radius:6px" />
+    </div>
+
+    <div class="mb-3">
+        <label>Chọn hình mới (nếu muốn đổi)</label>
+        <input type="file" name="ImageFile" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Mô tả</label>
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = 5 })
+    </div>
+
+    <button class="btn btn-primary">Lưu thay đổi</button>
+}
+
+

@@ -1,0 +1,85 @@
+﻿@model IEnumerable<LTW.Models.Orders>
+
+@{
+    ViewBag.Title = "Quản lý đơn hàng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h3>Quản lý đơn hàng</h3>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<table class="table table-bordered table-hover">
+    <thead class="table-secondary">
+        <tr>
+            <th>Mã đơn</th>
+            <th>Khách hàng</th>
+            <th>Tổng tiền</th>
+            <th>Ngày đặt</th>
+            <th>Trạng thái</th>
+            <th width="200">Thao tác</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var o in Model)
+        {
+            <tr>
+                <td>@o.OrderID</td>
+                <td>@o.Users.FullName</td>
+                <td>@String.Format("{0:N0}đ", o.TotalAmount)</td>
+                <td>@o.OrderDate.Value.ToString("dd/MM/yyyy")</td>
+                <td>@o.Status</td>
+
+                <td>
+                    @if (o.Status != "completed" && o.Status != "cancelled")
+                    {
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-secondary dropdown-toggle"
+                                    type="button" data-bs-toggle="dropdown">
+                                Đổi trạng thái
+                            </button>
+
+                            <ul class="dropdown-menu">
+
+                                @* pending *@
+                                @if (o.Status == "pending")
+                                {
+                                    <li><a class="dropdown-item" href="@Url.Action("UpdateStatus", new { id = o.OrderID, status = "confirmed" })">Đã xác nhận</a></li>
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li><a class="dropdown-item text-danger" href="@Url.Action("UpdateStatus", new { id = o.OrderID, status = "cancelled" })">Hủy đơn</a></li>
+                                }
+
+                                @* confirmed *@
+                                @if (o.Status == "confirmed")
+                                {
+                                    <li><a class="dropdown-item" href="@Url.Action("UpdateStatus", new { id = o.OrderID, status = "shipping" })">Đang giao hàng</a></li>
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li><a class="dropdown-item text-danger" href="@Url.Action("UpdateStatus", new { id = o.OrderID, status = "cancelled" })">Hủy đơn</a></li>
+                                }
+
+                                @* shipping *@
+                                @if (o.Status == "shipping")
+                                {
+                                    <li><a class="dropdown-item" href="@Url.Action("UpdateStatus", new { id = o.OrderID, status = "completed" })">Hoàn thành</a></li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <span class="text-muted">Không thể đổi</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

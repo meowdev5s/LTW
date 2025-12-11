@@ -1,0 +1,41 @@
+﻿@model IEnumerable<LTW.Models.Users>
+
+@{
+    ViewBag.Title = "Quản lý khách hàng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Quản lý khách hàng</h3>
+
+    <a href="@Url.Action("Create")" class="btn btn-primary">
+        + Thêm tài khoản
+    </a>
+</div>
+
+<table class="table table-bordered table-hover align-middle">
+    <thead class="table-secondary">
+        <tr>
+            <th>Họ tên</th>
+            <th>Email</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ</th>
+            <th>Số đơn hàng</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var u in Model)
+        {
+            var orderCount = u.Orders.Count();
+
+            <tr>
+                <td>@u.FullName</td>
+                <td>@u.Email</td>
+                <td>@u.Phone</td>
+                <td>@u.DiaChi</td>
+                <td>@orderCount</td>
+            </tr>
+        }
+    </tbody>
+</table>

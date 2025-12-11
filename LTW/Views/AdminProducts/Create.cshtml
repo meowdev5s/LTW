@@ -1,0 +1,58 @@
+﻿@model LTW.Models.Products
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<h3>Thêm sản phẩm</h3>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+{
+    <div class="mb-3">
+        <label>Tên sản phẩm</label>
+        @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        <label>SKU</label>
+        @Html.TextBoxFor(m => m.SKU, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        <label>Giá</label>
+        @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        <label>Tồn kho</label>
+        @Html.TextBoxFor(m => m.Stock, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        <label>Đơn vị</label>
+        @Html.TextBoxFor(m => m.Unit, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        <label>Danh mục</label>
+        <select name="CategoryID" class="form-control">
+            @foreach (var c in ViewBag.Categories)
+            {
+                <option value="@c.CategoryID">@c.CategoryName</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>Hình sản phẩm</label>
+        <input type="file" name="ImageFile" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Mô tả</label>
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = 5 })
+    </div>
+
+    <button class="btn btn-primary">Thêm sản phẩm</button>
+}

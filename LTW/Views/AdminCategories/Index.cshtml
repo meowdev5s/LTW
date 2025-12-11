@@ -1,0 +1,61 @@
+﻿@model IEnumerable<LTW.Models.Categories>
+@{
+    ViewBag.Title = "Danh sách danh mục";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Danh sách danh mục</h3>
+
+    <a href="@Url.Action("Create")" class="btn btn-primary">
+        + Thêm danh mục
+    </a>
+</div>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Tên danh mục</th>
+            <th>Danh mục cha</th>
+            <th width="150">Hành động</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var parent in Model.Where(c => c.ParentID == null))
+        {
+            <tr class="table-primary">
+                <td><strong>@parent.CategoryName</strong></td>
+                <td>-</td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = parent.CategoryID })" class="btn btn-sm btn-warning">Sửa</a>
+                    <a href="@Url.Action("Delete", new { id = parent.CategoryID })"
+                       onclick="return confirm('Bạn có chắc muốn xóa không?')"
+                       class="btn btn-sm btn-danger">Xóa</a>
+                </td>
+            </tr>
+
+            //Hiển thị danh mục con
+            foreach (var child in Model.Where(c => c.ParentID == parent.CategoryID))
+            {
+                <tr>
+                    <td style="padding-left: 40px">└ @child.CategoryName</td>
+                    <td>@parent.CategoryName</td>
+                    <td>
+                        <a href="@Url.Action("Edit", new { id = child.CategoryID })" class="btn btn-sm btn-warning">Sửa</a>
+                        <a href="@Url.Action("Delete", new { id = child.CategoryID })"
+                           onclick="return confirm('Bạn có chắc muốn xóa không?')"
+                           class="btn btn-sm btn-danger">Xóa</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

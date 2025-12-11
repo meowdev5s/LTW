@@ -1,8 +1,107 @@
-﻿
-@{
-    ViewBag.Title = "Index";
+﻿@{
+    ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Index</h2>
+<div class="container-fluid">
 
+    <h2 class="mb-4">Dashboard quản trị</h2>
+
+    <!-- CARD THỐNG KÊ -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 p-3 text-center">
+                <h4>@ViewBag.TotalProducts</h4>
+                <p class="text-muted">Sản phẩm</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 p-3 text-center">
+                <h4>@ViewBag.TotalCategories</h4>
+                <p class="text-muted">Danh mục</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 p-3 text-center">
+                <h4>@ViewBag.TotalOrders</h4>
+                <p class="text-muted">Đơn hàng</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 p-3 text-center">
+                <h4>@String.Format("{0:N0}đ", ViewBag.TotalRevenue)</h4>
+                <p class="text-muted">Tổng doanh thu</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- BIỂU ĐỒ -->
+    <div class="row g-4">
+
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0 p-3">
+                <h5>Doanh thu theo tháng</h5>
+                <canvas id="revenueChart" height="100"></canvas>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 p-3">
+                <h5>Đơn hàng theo trạng thái</h5>
+                <canvas id="statusChart" height="100"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- CHART.JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Revenue chart
+    const ctx1 = document.getElementById('revenueChart');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: [@Html.Raw(ViewBag.Labels)],
+            datasets: [{
+                label: 'Doanh thu',
+                data: [@Html.Raw(ViewBag.Revenues)],
+                fill: false,
+                borderWidth: 2,
+                borderColor: '#36a2eb',
+                tension: 0.3
+            }]
+        }
+    });
+
+    // Status chart
+    const ctx2 = document.getElementById('statusChart');
+    new Chart(ctx2, {
+        type: 'pie',
+        data: {
+            labels: ['Pending', 'Shipping', 'Completed', 'Cancelled'],
+            datasets: [{
+                data: [
+                    @ViewBag.Pending,
+                    @ViewBag.Shipping,
+                    @ViewBag.Completed,
+                    @ViewBag.Cancelled
+                ],
+                backgroundColor: [
+                    '#fbc02d',
+                    '#42a5f5',
+                    '#66bb6a',
+                    '#ef5350'
+                ]
+            }]
+        }
+    });
+</script>
