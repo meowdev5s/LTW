@@ -1,0 +1,108 @@
+﻿@model LTW.Models.Users
+@{
+    ViewBag.Title = "Hồ sơ cá nhân";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="fw-bold text-4m-primary">Hồ sơ của tôi</h2>
+            <p class="text-muted">Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-7">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-white fw-bold py-3">
+                    <i class="bi bi-person-lines-fill me-2"></i> Thông tin cá nhân
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.Message != null)
+                    {
+                        <div class="alert alert-success">@ViewBag.Message</div>
+                    }
+
+                    @using (Html.BeginForm("UpdateProfile", "Account", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.UserID)
+
+                        <div class="mb-3">
+                            <label class="form-label text-muted small">Tên đăng nhập</label>
+                            <input type="text" class="form-control bg-light" value="@Model.Username" readonly disabled />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Họ và tên</label>
+                            @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", @required = "required" })
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Email</label>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @type = "email" })
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Số điện thoại</label>
+                                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Địa chỉ nhận hàng</label>
+                            @Html.TextAreaFor(m => m.DiaChi, new { @class = "form-control", @rows = "3" })
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save me-1"></i> Lưu thay đổi
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-white fw-bold py-3">
+                    <i class="bi bi-shield-lock-fill me-2"></i> Bảo mật
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.ErrorPass != null)
+                    {
+                        <div class="alert alert-danger">@ViewBag.ErrorPass</div>
+                    }
+                    @if (ViewBag.MessagePass != null)
+                    {
+                        <div class="alert alert-success">@ViewBag.MessagePass</div>
+                    }
+
+                    @using (Html.BeginForm("ChangePassword", "Account", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="mb-3">
+                            <label class="form-label">Mật khẩu hiện tại</label>
+                            <input type="password" name="currentPass" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Mật khẩu mới</label>
+                            <input type="password" name="newPass" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Nhập lại mật khẩu mới</label>
+                            <input type="password" name="confirmPass" class="form-control" required />
+                        </div>
+
+                        <button type="submit" class="btn btn-warning text-dark">
+                            <i class="bi bi-key me-1"></i> Đổi mật khẩu
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -12,7 +12,6 @@ namespace LinhKienDienTu.Controllers
         LinhKienDienTuEntities_ db = new LinhKienDienTuEntities_();
 
         // GET: Account/Login
-        // Trang này chứa cả form Đăng nhập và Đăng ký (dạng Tabs)
         public ActionResult Login()
         {
             return View();
@@ -35,6 +34,7 @@ namespace LinhKienDienTu.Controllers
                     }
 
                     _user.PasswordHash = GetMD5(_user.PasswordHash); // Mã hóa pass
+                    _user.VaiTro = "customer";
                     db.Configuration.ValidateOnSaveEnabled = false;
                     db.Users.Add(_user);
                     db.SaveChanges();
@@ -54,57 +54,129 @@ namespace LinhKienDienTu.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LoginSubmit(FormCollection collect)
         {
-            // Code cũ của bạn: string email = collect["Email"];
-            // Sửa lại để khớp với "name" bên View HTML mình gửi (name="Username" và name="PasswordHash")
-            string inputUser = collect["Username"];
-            string inputPass = collect["PasswordHash"];
-
-            if (!string.IsNullOrEmpty(inputUser) && !string.IsNullOrEmpty(inputPass))
+            if (ModelState.IsValid)
             {
-                // 1. Mã hóa mật khẩu người dùng nhập vào để so sánh với DB
-                string f_password = GetMD5(inputPass);
-
-                // 2. Tìm User: Cho phép đăng nhập bằng cả Username HOẶC Email
-                var user = db.Users.FirstOrDefault(u =>
-                    (u.Username == inputUser || u.Email == inputUser) &&
-                    u.PasswordHash == f_password
-                );
-
-                if (user != null)
+                string inputUser = collect["UserName"];
+                string inputPass = collect["PasswordHash"];
+                if (!string.IsNullOrEmpty(inputUser) && !string.IsNullOrEmpty(inputPass))
                 {
-                    // 3. Đăng nhập thành công -> Lưu Session
-                    Session["User"] = user;
+                    //Mã hóa mật khẩu người dùng nhập vào để so sánh với DB
+                    string f_password = GetMD5(inputPass);
 
-                    // Nếu là Admin thì chuyển trang Admin, khách thì về trang chủ
-                    if (user.VaiTro == "admin")
+                    //Tìm User: Cho phép đăng nhập bằng cả Username HOẶC Email
+                    var user = db.Users.FirstOrDefault(u =>
+                        (u.Username == inputUser || u.Email == inputUser) &&
+                        u.PasswordHash == f_password
+                    );
+                    if (user != null)
                     {
-                        // return RedirectToAction("Index", "Admin"); // Ví dụ sau này có trang Admin
+                        Session["User"] = user;
+
+                        //Nếu là Admin thì chuyển trang Admin, khách thì về trang chủ
+                        if (user.VaiTro == "admin")
+                        {
+                            return RedirectToAction("Index", "Admin");
+                        }
                         return RedirectToAction("Index", "Home");
+
+
+
                     }
-                    return RedirectToAction("Index", "Home");
+                    else
+                    {
+                        ViewBag.ErrorLogin = "Tên đăng nhập hoặc mật khẩu không đúng!";
+                    }
                 }
                 else
                 {
-                    ViewBag.ErrorLogin = "Tên đăng nhập hoặc mật khẩu không đúng!";
+                    ViewBag.ErrorLogin = "Vui lòng nhập đầy đủ thông tin!";
                 }
-            }
-            else
-            {
-                ViewBag.ErrorLogin = "Vui lòng nhập đầy đủ thông tin!";
-            }
 
-            // Đăng nhập thất bại thì trả về View cũ
+            }
             return View();
         }
 
-        // Đăng xuất
+        //Đăng xuất
         public ActionResult Logout()
         {
             Session.Clear(); // Xóa session
             return RedirectToAction("Index", "Home");
         }
 
-        // Hàm mã hóa MD5 (Dùng cho demo đồ án)
+        // GET: Hiển thị trang hồ sơ
+        public ActionResult Profile()
+        {
+            if (Session["User"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            //Lấy thông tin mới nhất từ DB để hiển thị (tránh trường hợp Session cũ)
+            var uSession = (Users)Session["User"];
+            var user = db.Users.Find(uSession.UserID);
+
+            return View(user);
+        }
+
+        // POST: Cập nhật thông tin cá nhân
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateProfile(Users _user)
+        {
+            if (Session["User"] == null) return RedirectToAction("Login");
+
+            var userInDb = db.Users.Find(_user.UserID);
+            if (userInDb != null)
+            {
+                //Chỉ cập nhật các trường cho phép
+                userInDb.FullName = _user.FullName;
+                userInDb.Email = _user.Email;
+                userInDb.Phone = _user.Phone;
+                userInDb.DiaChi = _user.DiaChi;
+
+                db.SaveChanges();
+
+                //Cập nhật lại Session
+                Session["User"] = userInDb;
+                ViewBag.Message = "Cập nhật thông tin thành công!";
+            }
+            return View("Profile", userInDb);
+        }
+
+        // POST: Đổi mật khẩu
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword(string currentPass, string newPass, string confirmPass)
+        {
+            if (Session["User"] == null) return RedirectToAction("Login");
+
+            var uSession = (Users)Session["User"];
+            var userInDb = db.Users.Find(uSession.UserID);
+
+            //Kiểm tra mật khẩu cũ
+            string oldPassHash = GetMD5(currentPass);
+            if (userInDb.PasswordHash != oldPassHash)
+            {
+                ViewBag.ErrorPass = "Mật khẩu hiện tại không đúng!";
+                return View("Profile", userInDb);
+            }
+
+            //Kiểm tra xác nhận mật khẩu mới
+            if (newPass != confirmPass)
+            {
+                ViewBag.ErrorPass = "Mật khẩu xác nhận không khớp!";
+                return View("Profile", userInDb);
+            }
+
+            //Cập nhật mật khẩu mới
+            userInDb.PasswordHash = GetMD5(newPass);
+            db.SaveChanges();
+
+            ViewBag.MessagePass = "Đổi mật khẩu thành công!";
+            return View("Profile", userInDb);
+        }
+
+        //Hàm mã hóa MD5
         public static string GetMD5(string str)
         {
             MD5 md5 = new MD5CryptoServiceProvider();

@@ -55,5 +55,16 @@ namespace LTW.Controllers
 
             return View();
         }
+
+        //LOGOUT ADMIN
+        public ActionResult Logout()
+        {
+            //Xóa riêng session admin
+            Session["AdminName"] = null;
+            Session["AdminID"] = null;
+            Session["AdminRole"] = null;
+
+            return RedirectToAction("Login", "Account");
+        }
     }
 }

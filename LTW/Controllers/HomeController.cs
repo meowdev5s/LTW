@@ -52,5 +52,17 @@ namespace LTW.Controllers
             List<Products> list = db.Products.Where(x => x.ProductName.ToLower().Contains(keyword.ToLower())).ToList();
             return View("Index", list);
         }
+
+        public ActionResult About()
+        {
+            ViewBag.Message = "Giới thiệu về Linh kiện điện tử 4M";
+            return View();
+        }
+
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Thông tin liên hệ";
+            return View();
+        }
     }
 }

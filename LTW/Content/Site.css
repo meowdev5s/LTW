@@ -369,6 +369,10 @@ footer a {
     color: #e5e7eb;
 }
 
+.footer-4m a:hover {
+    color: #ffc107 !important;
+}
+
 /* ========== UTILITIES ========== */
 
 .gap-1 > * + * {

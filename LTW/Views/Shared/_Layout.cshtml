@@ -35,7 +35,7 @@
                 </div>
 
                 <!-- Search -->
-                
+
                 <div class="col-md-5 mb-2 mb-md-0">
                     @using (Html.BeginForm("TimKiemTheoTuKhoa", "Home", FormMethod.Post))
                     {
@@ -100,7 +100,7 @@
     <!-- MAIN NAV -->
     <nav class="bg-white border-top border-bottom">
         <div class="container py-2">
-            @Html.Partial("_NavbarCategories")            
+            @Html.Partial("_NavbarCategories")
         </div>
     </nav>
 
@@ -122,10 +122,50 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="bg-dark text-light py-3 mt-3">
-        <div class="container text-center small">
-            © @DateTime.Now.Year Linh kiện điện tử 4M.
-            <br />Email: <a href="mailto:contact@4m.vn" class="text-light">contact@4m.vn</a>
+    <footer class="footer-4m bg-dark text-light pt-4 mt-4">
+        <div class="container">
+
+            <div class="row">
+
+                <!-- Cột 1: Giới thiệu -->
+                <div class="col-md-4 mb-3">
+                    <h6 class="text-uppercase fw-bold">Linh Kiện Điện Tử 4M</h6>
+                    <p class="small text-light">
+                        Cung cấp linh kiện điện tử, module cảm biến, kit Arduino – ESP, phụ kiện kỹ thuật chất lượng cao.
+                    </p>
+                    <p class="small mb-1"><i class="bi bi-geo-alt"></i> 140 Lê Trọng Tấn - Tân Phú</p>
+                    <p class="small mb-1"><i class="bi bi-envelope"></i> contact@4m.vn</p>
+                    <p class="small"><i class="bi bi-telephone"></i> 0900 000 000</p>
+                </div>
+
+                <!-- Cột 2: Chính sách -->
+                <div class="col-md-4 mb-3">
+                    <h6 class="text-uppercase fw-bold">THÔNG TIN THÊM</h6>
+                    <ul class="list-unstyled small">
+                        <li><a href="@Url.Action("Contact","Home")" class="text-light text-decoration-none">Liên hệ</a></li>
+                        <li><a href="@Url.Action("About","Home")" class="text-light text-decoration-none">Giới thiệu</a></li>
+                    </ul>
+                </div>
+
+                <!-- Cột 3: Mạng xã hội -->
+                <div class="col-md-4 mb-3">
+                    <h6 class="text-uppercase fw-bold">Kết nối với chúng tôi</h6>
+                    <div class="d-flex gap-3 fs-4">
+                        <a href="#" class="text-light"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-light"><i class="bi bi-youtube"></i></a>
+                        <a href="#" class="text-light"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-light"><i class="bi bi-tiktok"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <hr class="border-secondary" />
+
+            <div class="text-center small py-2">
+                © @DateTime.Now.Year Linh Kiện Điện Tử 4M.
+                Tất cả quyền được bảo lưu.
+            </div>
         </div>
     </footer>
 

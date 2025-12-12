@@ -1,19 +1,87 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "Liên hệ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
 
-    <address>
-        One Microsoft Way<br />
-        Redmond, WA 98052-6399<br />
-        <abbr title="Phone">P:</abbr>
-        425.555.0100
-    </address>
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold">Liên hệ với chúng tôi</h2>
+        <p class="text-muted">Chúng tôi luôn sẵn sàng hỗ trợ bạn 24/7</p>
+    </div>
 
-    <address>
-        <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-    </address>
-</main>
+    <div class="row g-5">
+        <div class="col-md-5">
+            <div class="card bg-dark text-white h-100 border-0 shadow">
+                <div class="card-body p-4">
+                    <h4 class="mb-4">Thông tin cửa hàng</h4>
+
+                    <div class="d-flex mb-4">
+                        <i class="bi bi-geo-alt-fill fs-4 me-3 text-danger"></i>
+                        <div>
+                            <h6 class="fw-bold mb-1">Địa chỉ</h6>
+                            <small>Số 123, Đường ABC, Quận XYZ, TP.HCM</small>
+                        </div>
+                    </div>
+
+                    <div class="d-flex mb-4">
+                        <i class="bi bi-telephone-fill fs-4 me-3 text-danger"></i>
+                        <div>
+                            <h6 class="fw-bold mb-1">Điện thoại</h6>
+                            <small>090 123 4567 (Hỗ trợ kỹ thuật)</small>
+                        </div>
+                    </div>
+
+                    <div class="d-flex mb-4">
+                        <i class="bi bi-envelope-fill fs-4 me-3 text-danger"></i>
+                        <div>
+                            <h6 class="fw-bold mb-1">Email</h6>
+                            <small>support@linhkien4m.com</small>
+                        </div>
+                    </div>
+
+                    <div class="mt-5">
+                        <h6>Theo dõi chúng tôi:</h6>
+                        <div class="d-flex gap-3 mt-2">
+                            <a href="#" class="text-white fs-5"><i class="bi bi-facebook"></i></a>
+                            <a href="#" class="text-white fs-5"><i class="bi bi-youtube"></i></a>
+                            <a href="#" class="text-white fs-5"><i class="bi bi-tiktok"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h4 class="mb-4">Gửi thắc mắc cho chúng tôi</h4>
+                    <form>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Họ tên</label>
+                                <input type="text" class="form-control" placeholder="Nhập họ tên">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" placeholder="Nhập email">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Chủ đề</label>
+                                <input type="text" class="form-control" placeholder="Vấn đề cần hỗ trợ">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Nội dung</label>
+                                <textarea class="form-control" rows="5" placeholder="Chi tiết nội dung..."></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-danger px-4">
+                                    <i class="bi bi-send-fill me-2"></i> Gửi tin nhắn
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

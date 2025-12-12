@@ -1,9 +1,35 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "Giới thiệu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
 
-    <p>Use this area to provide additional information.</p>
-</main>
+<div class="container py-5">
+    <div class="row align-items-center">
+        <div class="col-lg-6">
+            <h2 class="fw-bold text-4m-primary mb-3">Về chúng tôi - 4M Electronics</h2>
+            <p class="lead text-muted">Chuyên cung cấp linh kiện điện tử, Module Arduino, IoT và các giải pháp công nghệ hàng đầu.</p>
+            <p>
+                Được thành lập với niềm đam mê công nghệ, 4M cam kết mang đến cho sinh viên và kỹ sư những sản phẩm chất lượng với giá thành hợp lý nhất.
+                Kho hàng phong phú từ IC, Cảm biến, Vi điều khiển đến các dụng cụ đo lường.
+            </p>
+            <div class="mt-4">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="bi bi-check-circle-fill text-success fs-4 me-3"></i>
+                    <span>Sản phẩm chính hãng, chất lượng đảm bảo.</span>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <i class="bi bi-check-circle-fill text-success fs-4 me-3"></i>
+                    <span>Hỗ trợ kỹ thuật nhiệt tình cho sinh viên.</span>
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-check-circle-fill text-success fs-4 me-3"></i>
+                    <span>Giao hàng nhanh chóng toàn quốc.</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mt-4 mt-lg-0">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop"
+                 class="img-fluid rounded shadow" alt="Linh kiện điện tử">
+        </div>
+    </div>
+</div>

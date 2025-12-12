@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using LTW.Models;
@@ -33,6 +35,17 @@ namespace LTW.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Kiểm tra username trùng
+                if (db.Users.Any(u => u.Username == model.Username))
+                {
+                    ViewBag.Error = "Tên đăng nhập đã tồn tại!";
+                    ViewBag.Roles = new[] { "admin", "customer" };
+                    return View(model);
+                }
+
+                //Mã hóa password
+                model.PasswordHash = GetMD5(model.PasswordHash);
+
                 db.Users.Add(model);
                 db.SaveChanges();
 
@@ -41,6 +54,20 @@ namespace LTW.Controllers
 
             ViewBag.Roles = new[] { "admin", "customer" };
             return View(model);
+        }
+
+        // Hàm mã hóa MD5
+        public static string GetMD5(string str)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] fromData = Encoding.UTF8.GetBytes(str);
+            byte[] targetData = md5.ComputeHash(fromData);
+            string byte2String = null;
+            for (int i = 0; i < targetData.Length; i++)
+            {
+                byte2String += targetData[i].ToString("x2");
+            }
+            return byte2String;
         }
     }
 }

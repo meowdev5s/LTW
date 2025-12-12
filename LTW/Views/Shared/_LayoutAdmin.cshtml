@@ -38,10 +38,10 @@
                         </a>
 
                         <span class="admin-topbar-link">
-                            Xin chào, @Session["AdminName"] ?? "Admin"
+                            Xin chào, @(Session["AdminName"] != null ? Session["AdminName"].ToString() : "Admin")
                         </span>
 
-                        <a href="@Url.Action("Logout", "AdminAccount")"
+                        <a href="@Url.Action("Logout", "Admin")"
                            class="admin-topbar-link">
                             Đăng xuất
                         </a>
