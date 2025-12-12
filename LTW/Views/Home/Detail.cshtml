@@ -17,10 +17,9 @@
     <!-- Thông tin sản phẩm -->
     <div class="col-md-8">
         <h3>@Model.ProductName</h3>
-        <h4>@Model.Price.ToString("N0") VNĐ</h4>
-        <p>
-            @Model.Description
-        </p>
+        <h4>Giá thành: <span style="color:red">@Model.Price.ToString("N0") VNĐ</span></h4>
+        <h4>số lượng còn lại: <span style="color:red">@Model.Stock</span></h4>
+        <p>Mô tả sản phẩm: <span>@Model.Description</span></p>
         <div class="mb-3">
             <a href="@Url.Action("AddToCart","Cart", new { id = Model.ProductID })" class="btn btn-success">Thêm vào giỏ hàng</a>
             <a href="@Url.Action("Index", "Home")" class="btn btn-outline-secondary">Quay lại</a>
