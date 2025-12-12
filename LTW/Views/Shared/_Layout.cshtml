@@ -62,7 +62,7 @@
                        class="cart-button-4m position-relative d-flex align-items-center justify-content-center me-1">
                         <i class="bi bi-bag-heart-fill cart-icon-4m"></i>
                         <span class="cart-badge-4m position-absolute">
-                            @((Session["Cart"] != null) ? ((List<CartItems>)Session["Cart"]).Count : 0)
+                            @(Session["Cart"] != null ? ((LTW.Models.CartFuntion)Session["Cart"]).SoMatHang() : 0)
                         </span>
                     </a>
 

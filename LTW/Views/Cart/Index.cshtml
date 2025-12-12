@@ -1,0 +1,86 @@
+﻿@model LTW.Models.CartFuntion
+
+<h2 class="mb-4">Giỏ hàng của bạn</h2>
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                @if (Model.list.Count > 0)
+                {
+
+
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr class="table-light">
+                                <th scope="col">Sản phẩm</th>
+                                <th scope="col" class="text-center">Giá (đ)</th>
+                                <th scope="col" class="text-center">Số lượng</th>
+                                <th scope="col" class="text-end">Tổng cộng (đ)</th>
+                                <th scope="col" class="text-center">Xóa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.list)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="@Url.Content("~/Content/Images/" + item.ImageURL)" class="me-3" alt="@item.ProductName" width="40">
+                                            <span class="fw-bold">@item.ProductName</span>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">@item.Price.ToString("N0") </td>
+                                    <td class="text-center">
+                                        <a href="@Url.Action("UpdateSLCart", "Cart", new { id = item.ProductID, num=-1})" class="btn btn-sm btn-outline-danger"
+                                           style="padding: 5px 15px; margin: 5px;">-</a>
+                                        <b>@item.Quantity</b>
+                                        <a href="@Url.Action("UpdateSLCart","Cart", new {id = item.ProductID, num=1})" class="btn btn-sm btn-outline-success"
+                                           style="padding: 5px 15px; margin: 5px;">+</a>
+                                    </td>
+                                    <td class="text-end fw-bold">@item.ThanhTien.ToString("N0")</td>
+                                    <td class="text-center">
+                                        <a href="@Url.Action("RemoveFromCart","Cart", new {id = item.ProductID})" class="btn btn-sm btn-outline-danger">Xóa</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="text-center">Không có sản phẩm trong giỏ hàng</div>
+                }
+
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <a href="/" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left"></i> Tiếp tục mua sắm
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white fw-bold">
+                Tóm tắt đơn hàng
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Tổng tiền hàng:</span>
+                    <span class="fw-bold">@Model.TongThanhTien().ToString("N0") đ</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Phí vận chuyển:</span>
+                    <span class="fw-bold">0 đ</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between mb-3 text-danger fs-5">
+                    <span class="fw-bold">TỔNG CỘNG:</span>
+                    <span class="fw-bold">@Model.TongThanhTien().ToString("N0") đ</span>
+                </div>
+                <a href="@Url.Action("PaymentConfirm","Cart")" class="btn btn-success w-100 btn-lg">Tiến hành Thanh toán</a>
+            </div>
+        </div>
+    </div>
+</div>

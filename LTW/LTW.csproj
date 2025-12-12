@@ -168,6 +168,7 @@
     <Compile Include="Controllers\AdminOrdersController.cs" />
     <Compile Include="Controllers\AdminProductsController.cs" />
     <Compile Include="Controllers\AdminUsersController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoriesApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -176,6 +177,8 @@
     <Compile Include="Models\Cart.cs">
       <DependentUpon>LinhKienDienTu.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CartFuntion.cs" />
+    <Compile Include="Models\CartItemFuntion.cs" />
     <Compile Include="Models\CartItems.cs">
       <DependentUpon>LinhKienDienTu.tt</DependentUpon>
     </Compile>
@@ -300,6 +303,8 @@
     <Content Include="Views\AdminOrders\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Home\Detail.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Cart\PaymentConfirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
