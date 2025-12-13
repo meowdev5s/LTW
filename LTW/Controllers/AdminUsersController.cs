@@ -35,7 +35,7 @@ namespace LTW.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Kiểm tra username trùng
+                //Kiểm tra trùng Username
                 if (db.Users.Any(u => u.Username == model.Username))
                 {
                     ViewBag.Error = "Tên đăng nhập đã tồn tại!";
@@ -43,7 +43,25 @@ namespace LTW.Controllers
                     return View(model);
                 }
 
-                //Mã hóa password
+                //Kiểm tra trùng Email
+                if (!string.IsNullOrEmpty(model.Email) &&
+                    db.Users.Any(u => u.Email == model.Email))
+                {
+                    ViewBag.Error = "Email đã được sử dụng!";
+                    ViewBag.Roles = new[] { "admin", "customer" };
+                    return View(model);
+                }
+
+                //Kiểm tra trùng Số điện thoại
+                if (!string.IsNullOrEmpty(model.Phone) &&
+                    db.Users.Any(u => u.Phone == model.Phone))
+                {
+                    ViewBag.Error = "Số điện thoại đã được sử dụng!";
+                    ViewBag.Roles = new[] { "admin", "customer" };
+                    return View(model);
+                }
+
+                //Mã hóa mật khẩu
                 model.PasswordHash = GetMD5(model.PasswordHash);
 
                 db.Users.Add(model);

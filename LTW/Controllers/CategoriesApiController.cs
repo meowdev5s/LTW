@@ -12,9 +12,7 @@ namespace LTW.Controllers
     {
         LinhKienDienTuEntities_ db = new LinhKienDienTuEntities_();
 
-        // ============================
-        // 1. Lấy tất cả danh mục
-        // ============================
+        //Lấy tất cả danh mục
         [HttpGet]
         public IHttpActionResult GetAll()
         {
@@ -29,9 +27,7 @@ namespace LTW.Controllers
             return Ok(data);
         }
 
-        // ============================
-        // 2. Lấy danh mục theo ID
-        // ============================
+        //Lấy danh mục theo ID
         [HttpGet]
         public IHttpActionResult Get(int id)
         {
@@ -46,9 +42,7 @@ namespace LTW.Controllers
             });
         }
 
-        // ============================
-        // 3. Thêm danh mục
-        // ============================
+        //Thêm danh mục
         [HttpPost]
         public IHttpActionResult Post(Categories model)
         {
@@ -61,9 +55,7 @@ namespace LTW.Controllers
             return Ok(new { message = "Đã thêm thành công", model.CategoryID });
         }
 
-        // ============================
-        // 4. Sửa danh mục
-        // ============================
+        //Sửa danh mục
         [HttpPut]
         public IHttpActionResult Put(int id, Categories model)
         {
@@ -78,9 +70,7 @@ namespace LTW.Controllers
             return Ok(new { message = "Đã cập nhật thành công" });
         }
 
-        // ============================
-        // 5. Xóa danh mục
-        // ============================
+        //Xóa danh mục
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {

@@ -61,9 +61,25 @@
                     <a href="@Url.Action("Index","Cart")"
                        class="cart-button-4m position-relative d-flex align-items-center justify-content-center me-1">
                         <i class="bi bi-bag-heart-fill cart-icon-4m"></i>
-                        <span class="cart-badge-4m position-absolute">
-                            @(Session["Cart"] != null ? ((LTW.Models.CartFuntion)Session["Cart"]).SoMatHang() : 0)
-                        </span>
+                        @{
+                            int cartCount = 0;
+
+                            if (Session["User"] != null)
+                            {
+                                var u = (Users)Session["User"];
+                                using (var db = new LinhKienDienTuEntities_())
+                                {
+                                    var cart = db.Cart.FirstOrDefault(c => c.UserID == u.UserID);
+                                    if (cart != null)
+                                    {
+                                        cartCount = db.CartItems
+                                                      .Where(ci => ci.CartID == cart.CartID)
+                                                      .Sum(ci => (int?)ci.Quantity) ?? 0;
+                                    }
+                                }
+                            }
+                        }
+                        <span class="cart-badge-4m position-absolute">@cartCount</span>
                     </a>
 
                     @* KHU VỰC ĐĂNG NHẬP/ĐĂNG KÝ *@

@@ -10,6 +10,21 @@
     <a href="@Url.Action("Index")" class="btn btn-secondary">Quay lại</a>
 </div>
 
+@{
+    var user = Session["User"] as LTW.Models.Users;
+    if (user == null || user.VaiTro != "admin")
+    {
+        Response.Redirect(Url.Action("Login", "Account"));
+    }
+}
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Error
+    </div>
+}
+
 @using (Html.BeginForm())
 {
     <div class="mb-3">

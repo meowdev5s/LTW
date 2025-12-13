@@ -1,14 +1,14 @@
-﻿@model LTW.Models.CartFuntion
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 <h2 class="mb-4">Giỏ hàng của bạn</h2>
 <div class="row">
     <div class="col-lg-8">
         <div class="card shadow-sm mb-4">
             <div class="card-body">
-                @if (Model.list.Count > 0)
+                @if (ViewBag.CartItems != null && ViewBag.CartItems.Count > 0)
                 {
-
-
                     <table class="table table-hover align-middle">
                         <thead>
                             <tr class="table-light">
@@ -20,26 +20,35 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model.list)
+                            @foreach (var item in ViewBag.CartItems)
                             {
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <img src="@Url.Content("~/Content/Images/" + item.ImageURL)" class="me-3" alt="@item.ProductName" width="40">
-                                            <span class="fw-bold">@item.ProductName</span>
+                                            <img src="@Url.Content("~/Content/Images/" + item.Products.ImageURL)" class="me-3" alt="@item.Products.ProductName" width="40">
+                                            <span class="fw-bold">@item.Products.ProductName</span>
                                         </div>
                                     </td>
-                                    <td class="text-center">@item.Price.ToString("N0") </td>
+                                    <td class="text-center">@item.Products.Price.ToString("N0")</td>
                                     <td class="text-center">
-                                        <a href="@Url.Action("UpdateSLCart", "Cart", new { id = item.ProductID, num=-1})" class="btn btn-sm btn-outline-danger"
-                                           style="padding: 5px 15px; margin: 5px;">-</a>
+                                        <a href="@Url.Action("UpdateQuantity", "Cart", new { id = item.ItemID, delta = -1 })" class="btn btn-sm btn-outline-danger">-</a>
                                         <b>@item.Quantity</b>
-                                        <a href="@Url.Action("UpdateSLCart","Cart", new {id = item.ProductID, num=1})" class="btn btn-sm btn-outline-success"
-                                           style="padding: 5px 15px; margin: 5px;">+</a>
+                                        @if (item.Quantity < item.Products.Stock)
+                                        {
+                                            <a href="@Url.Action("UpdateQuantity", "Cart", new { id = item.ItemID, delta = 1 })" class="btn btn-sm btn-outline-success" style="padding: 5px 15px; margin: 5px;">+</a>
+                                        }
+                                        else
+                                        {
+                                            <button class="btn btn-sm btn-outline-secondary" disabled style="padding: 5px 15px; margin: 5px;">+</button>
+                                        }
                                     </td>
-                                    <td class="text-end fw-bold">@item.ThanhTien.ToString("N0")</td>
+
+                                    <td class="text-end fw-bold">
+                                        @((item.Quantity * item.Products.Price).ToString("N0"))
+                                    </td>
                                     <td class="text-center">
-                                        <a href="@Url.Action("RemoveFromCart","Cart", new {id = item.ProductID})" class="btn btn-sm btn-outline-danger">Xóa</a>
+                                        <a href="@Url.Action("Remove", "Cart", new { id = item.ItemID })"
+                                           class="btn btn-sm btn-outline-danger">Xóa</a>
                                     </td>
                                 </tr>
                             }
@@ -68,7 +77,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between mb-2">
                     <span>Tổng tiền hàng:</span>
-                    <span class="fw-bold">@Model.TongThanhTien().ToString("N0") đ</span>
+                    <span class="fw-bold">@ViewBag.TotalPrice.ToString("N0") đ</span>
                 </div>
                 <div class="d-flex justify-content-between mb-2">
                     <span>Phí vận chuyển:</span>
@@ -77,7 +86,7 @@
                 <hr>
                 <div class="d-flex justify-content-between mb-3 text-danger fs-5">
                     <span class="fw-bold">TỔNG CỘNG:</span>
-                    <span class="fw-bold">@Model.TongThanhTien().ToString("N0") đ</span>
+                    <span class="fw-bold">@ViewBag.TotalPrice.ToString("N0") đ</span>
                 </div>
                 <a href="@Url.Action("PaymentConfirm","Cart")" class="btn btn-success w-100 btn-lg">Tiến hành Thanh toán</a>
             </div>

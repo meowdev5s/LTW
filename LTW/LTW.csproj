@@ -177,8 +177,6 @@
     <Compile Include="Models\Cart.cs">
       <DependentUpon>LinhKienDienTu.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CartFuntion.cs" />
-    <Compile Include="Models\CartItemFuntion.cs" />
     <Compile Include="Models\CartItems.cs">
       <DependentUpon>LinhKienDienTu.tt</DependentUpon>
     </Compile>
@@ -306,6 +304,7 @@
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Cart\PaymentConfirm.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
+    <Content Include="Views\Home\ContactConfirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

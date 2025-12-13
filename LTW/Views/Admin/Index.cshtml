@@ -3,6 +3,14 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
+@{
+    var user = Session["User"] as LTW.Models.Users;
+    if (user == null || user.VaiTro != "admin")
+    {
+        Response.Redirect(Url.Action("Login", "Account"));
+    }
+}
+
 <div class="container-fluid">
 
     <h2 class="mb-4">Dashboard quản trị</h2>

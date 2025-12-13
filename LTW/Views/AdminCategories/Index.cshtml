@@ -4,6 +4,14 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
+@{
+    var user = Session["User"] as LTW.Models.Users;
+    if (user == null || user.VaiTro != "admin")
+    {
+        Response.Redirect(Url.Action("Login", "Account"));
+    }
+}
+
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h3>Danh sách danh mục</h3>
 

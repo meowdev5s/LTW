@@ -17,39 +17,66 @@ namespace LinhKienDienTu.Controllers
             return View();
         }
 
-        // POST: Xử lý Đăng ký
+        //POST: Xử lý Đăng ký
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult RegisterSubmit(Users _user, string regConfirmPass)
         {
             if (ModelState.IsValid)
             {
-                var check = db.Users.FirstOrDefault(s => s.Username == _user.Username);
-                if (check == null)
-                {
-                    if (_user.PasswordHash != regConfirmPass)
-                    {
-                        ViewBag.ErrorRegister = "Mật khẩu xác nhận không khớp!";
-                        return View("Login");
-                    }
-
-                    _user.PasswordHash = GetMD5(_user.PasswordHash); // Mã hóa pass
-                    _user.VaiTro = "customer";
-                    db.Configuration.ValidateOnSaveEnabled = false;
-                    db.Users.Add(_user);
-                    db.SaveChanges();
-                    return RedirectToAction("Login");
-                }
-                else
+                //Trùng Username
+                if (db.Users.Any(u => u.Username == _user.Username))
                 {
                     ViewBag.ErrorRegister = "Tên đăng nhập đã tồn tại!";
+                    ViewBag.ActiveTab = "register";
                     return View("Login");
                 }
+
+                //Trùng Email
+                if (!string.IsNullOrEmpty(_user.Email) &&
+                    db.Users.Any(u => u.Email == _user.Email))
+                {
+                    ViewBag.ErrorRegister = "Email đã được sử dụng!";
+                    return View("Login");
+                }
+
+                //Trùng SĐT
+                if (!string.IsNullOrEmpty(_user.Phone) &&
+                    db.Users.Any(u => u.Phone == _user.Phone))
+                {
+                    ViewBag.ErrorRegister = "Số điện thoại đã được sử dụng!";
+                    return View("Login");
+                }
+
+                //Xác nhận mật khẩu
+                if (_user.PasswordHash != regConfirmPass)
+                {
+                    ViewBag.ErrorRegister = "Mật khẩu xác nhận không khớp!";
+                    return View("Login");
+                }
+
+                _user.PasswordHash = GetMD5(_user.PasswordHash);
+                _user.VaiTro = "customer";
+
+                db.Configuration.ValidateOnSaveEnabled = false;
+                db.Users.Add(_user);
+                db.SaveChanges();
+
+                // Tạo giỏ hàng cho user mới
+                Cart cart = new Cart
+                {
+                    UserID = _user.UserID
+                };
+                db.Cart.Add(cart);
+                db.SaveChanges();
+
+                return RedirectToAction("Login");
             }
+
             return View("Login");
         }
 
-        // POST: Xử lý Đăng nhập
+        //POST: Xử lý Đăng nhập
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LoginSubmit(FormCollection collect)
@@ -79,8 +106,6 @@ namespace LinhKienDienTu.Controllers
                         }
                         return RedirectToAction("Index", "Home");
 
-
-
                     }
                     else
                     {
@@ -93,7 +118,7 @@ namespace LinhKienDienTu.Controllers
                 }
 
             }
-            return View();
+            return View("Login");
         }
 
         //Đăng xuất
@@ -103,7 +128,7 @@ namespace LinhKienDienTu.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // GET: Hiển thị trang hồ sơ
+        //GET: Hiển thị trang hồ sơ
         public ActionResult Profile()
         {
             if (Session["User"] == null)
@@ -143,7 +168,7 @@ namespace LinhKienDienTu.Controllers
             return View("Profile", userInDb);
         }
 
-        // POST: Đổi mật khẩu
+        //POST: Đổi mật khẩu
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ChangePassword(string currentPass, string newPass, string confirmPass)

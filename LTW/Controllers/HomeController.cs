@@ -64,5 +64,10 @@ namespace LTW.Controllers
             ViewBag.Message = "Thông tin liên hệ";
             return View();
         }
+        public ActionResult ContactConfirm()
+        {
+            ViewBag.Message = "Nhận thông tin liên hệ";
+            return View();
+        }
     }
 }

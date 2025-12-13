@@ -5,6 +5,14 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
+@{
+    var user = Session["User"] as LTW.Models.Users;
+    if (user == null || user.VaiTro != "admin")
+    {
+        Response.Redirect(Url.Action("Login", "Account"));
+    }
+}
+
 <h3>Quản lý đơn hàng</h3>
 
 @if (TempData["Error"] != null)
