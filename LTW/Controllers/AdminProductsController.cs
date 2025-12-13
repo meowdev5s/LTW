@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -98,16 +99,18 @@ namespace LTW.Controllers
         {
             if (Request.Files.Count > 0)
             {
-                var file = Request.Files[0]; // file hình đầu tiên
+                var file = Request.Files[0];
 
                 if (file != null && file.ContentLength > 0)
                 {
-                    string fileName = System.IO.Path.GetFileName(file.FileName);
-                    string path = Server.MapPath("~/Images/Products/" + fileName);
+                    string fileName = Path.GetFileName(file.FileName);
 
+                    //LƯU VÀO /Images/Products (ngoài Content)
+                    string path = Server.MapPath("~/Images/" + fileName);
                     file.SaveAs(path);
 
-                    model.ImageURL = "Products/" + fileName;
+                    //LƯU ĐƯỜNG DẪN TƯƠNG ĐỐI
+                    model.ImageURL = fileName;
                 }
             }
 
